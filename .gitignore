@@ -1,0 +1,9 @@
+
+Debug/
+Release/
+Handmade/Debug/
+Handmade/Release/
+
+.vs/
+
+Handmade/imgui.ini
