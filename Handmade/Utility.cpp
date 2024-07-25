@@ -328,3 +328,31 @@ void Utility::Log(Destination destination,
 		}
 	}
 }
+
+//Code to launch and use the Windows Font dialog box
+
+//auto DisplayFontDialog = []()
+//{
+//	HFONT hfont, hfontPrev;
+//	DWORD previousTextColor;
+//	HDC deviceContext;             // display device context of owner window
+//
+//	CHOOSEFONT fontDialog;           // common dialog box structure
+//	static LOGFONT logFont;          // logical font structure
+//	static DWORD currentTextColor;   // current text color
+//
+//	ZeroMemory(&fontDialog, sizeof(fontDialog));
+//	fontDialog.lStructSize = sizeof(fontDialog);
+//	fontDialog.hwndOwner = Screen::Instance()->GetWindowHandle();
+//	fontDialog.lpLogFont = &logFont;
+//	fontDialog.rgbColors = currentTextColor;
+//	fontDialog.Flags = CF_SCREENFONTS | CF_EFFECTS;
+//
+//	if (ChooseFont(&fontDialog) == TRUE)
+//	{
+//		hfont = CreateFontIndirect(cf.lpLogFont);
+//		hfontPrev = SelectObject(hdc, hfont);
+//		rgbCurrent = cf.rgbColors;
+//		rgbPrev = SetTextColor(hdc, rgbCurrent);
+//	}
+//};
