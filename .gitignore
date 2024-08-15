@@ -1,9 +1,6 @@
 .vs/
 Debug/
 Release/
-Handmade/Debug/
-Handmade/Release/
-Handmade/imgui.ini
 imgui.ini
 
 CMakeFiles/
