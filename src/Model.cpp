@@ -95,7 +95,7 @@ bool Model::Load(const std::string& tag,
 
 					if (vertexGroup.v < 0)
 					{
-						vertexGroup.v = rawMesh.vertices.size() + (vertexGroup.v + 1);
+						vertexGroup.v = static_cast<int>(rawMesh.vertices.size()) + (vertexGroup.v + 1);
 					}
 
 					//Some .obj files do not contain texture coordinate data 
@@ -107,12 +107,12 @@ bool Model::Load(const std::string& tag,
 
 						if (vertexGroup.t < 0)
 						{
-							vertexGroup.t = rawMesh.textureCoords.size() + (vertexGroup.t + 1);
+							vertexGroup.t = static_cast<int>(rawMesh.textureCoords.size()) + (vertexGroup.t + 1);
 						}
 
 						if (vertexGroup.n < 0)
 						{
-							vertexGroup.n = rawMesh.normals.size() + (vertexGroup.n + 1);
+							vertexGroup.n = static_cast<int>(rawMesh.normals.size()) + (vertexGroup.n + 1);
 						}
 					}
 
@@ -122,7 +122,7 @@ bool Model::Load(const std::string& tag,
 
 						if (vertexGroup.n < 0)
 						{
-							vertexGroup.n = rawMesh.normals.size() + (vertexGroup.n + 1);
+							vertexGroup.n = static_cast<int>(rawMesh.normals.size()) + (vertexGroup.n + 1);
 						}
 					}
 
@@ -429,7 +429,7 @@ void Model::FillBuffers()
 		//TODO - Need to label each buffer object properly
 		static auto count = 0;
 
-		Buffer buffer("Mesh_" + std::to_string(count++), mesh.indices.size(), true);
+		Buffer buffer("Mesh_" + std::to_string(count++), static_cast<GLsizei>(mesh.indices.size()), true);
 
 		buffer.FillEBO(&mesh.indices[0], mesh.indices.size() * sizeof(GLuint));
 		buffer.FillVBO(Buffer::VBO::VertexBuffer,

@@ -56,7 +56,7 @@ Tile::Tile(const std::string& tag, const std::string& filename,
 								   -halfDimension.x, -halfDimension.y, 0.0f };
 
 			buffer.AppendVBO(Buffer::VBO::VertexBuffer, vertices, sizeof(vertices), offsetVertex);
-			offsetVertex += BYTES_PER_TILE_VERTEX;
+			offsetVertex += static_cast<GLuint>(BYTES_PER_TILE_VERTEX);
 
 			GLfloat colors[] = { color.r, color.g, color.b, color.a,
 								 color.r, color.g, color.b, color.a,
@@ -64,7 +64,7 @@ Tile::Tile(const std::string& tag, const std::string& filename,
 								 color.r, color.g, color.b, color.a };
 
 			buffer.AppendVBO(Buffer::VBO::ColorBuffer, colors, sizeof(colors), offsetColor);
-			offsetColor += BYTES_PER_TILE_COLOR;
+			offsetColor += static_cast<GLuint>(BYTES_PER_TILE_COLOR);
 
 			//Take the desired 'cel' to 'cut out' and multiply it by the cel's dimension value
 			//This gives us a normalized texture coordinate value that is our 'starting point' 
@@ -76,13 +76,13 @@ Tile::Tile(const std::string& tag, const std::string& filename,
 							  UVOrigin.s,                  UVOrigin.t + celDimension.y };
 
 			buffer.AppendVBO(Buffer::VBO::TextureBuffer, UVs, sizeof(UVs), offsetUV);
-			offsetUV += BYTES_PER_TILE_UV;
+			offsetUV += static_cast<GLuint>(BYTES_PER_TILE_UV);
 
 			GLuint indices[] = { 0 + (count * 4), 1 + (count * 4), 3 + (count * 4),
 								 3 + (count * 4), 1 + (count * 4), 2 + (count * 4) };
 
 			buffer.AppendEBO(indices, sizeof(indices), offsetIndex);
-			offsetIndex += BYTES_PER_TILE_INDEX;
+			offsetIndex += static_cast<GLuint>(BYTES_PER_TILE_INDEX);
 			count++;
 		}
 	}

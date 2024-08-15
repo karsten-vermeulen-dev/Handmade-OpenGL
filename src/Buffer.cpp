@@ -166,13 +166,17 @@ void Buffer::Render(RenderMode renderMode, GLuint index, GLuint totalRenderVerti
 		if (index > 0)
 		{
 			glDrawElements(static_cast<GLenum>(renderMode),
-				totalRenderVertices, GL_UNSIGNED_INT, (const void*)(index));
+				           totalRenderVertices, 
+				           GL_UNSIGNED_INT, 
+				           reinterpret_cast<const void*>(&index));
 		}
 
 		else
 		{
 			glDrawElements(static_cast<GLenum>(renderMode),
-				totalVertices, GL_UNSIGNED_INT, (const void*)(nullptr));
+				           totalVertices, 
+				           GL_UNSIGNED_INT, 
+				           (const void*)(nullptr));
 		}
 	}
 
