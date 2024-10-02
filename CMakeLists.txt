@@ -98,17 +98,19 @@ add_executable(Handmade ${SOURCE_FILES} ${INCLUDE_FILES} ${SHADER_FILES})
 target_include_directories(Handmade PRIVATE ${CMAKE_SOURCE_DIR}/src/FMOD)
 target_include_directories(Handmade PRIVATE ${CMAKE_SOURCE_DIR}/src/FreeType)
 target_include_directories(Handmade PRIVATE ${CMAKE_SOURCE_DIR}/src/GLAD)
+target_include_directories(Handmade PRIVATE ${CMAKE_SOURCE_DIR}/src/GLFW)
 target_include_directories(Handmade PRIVATE ${CMAKE_SOURCE_DIR}/src/GLM)
 target_include_directories(Handmade PRIVATE ${CMAKE_SOURCE_DIR}/src/imgui)
 target_include_directories(Handmade PRIVATE ${CMAKE_SOURCE_DIR}/src/SDL)
 
 target_link_libraries(Handmade 
-${CMAKE_SOURCE_DIR}/lib/SDL/SDL2.lib 
-${CMAKE_SOURCE_DIR}/lib/SDL/SDL2main.lib 
-${CMAKE_SOURCE_DIR}/lib/SDL/SDL2_image.lib
-${CMAKE_SOURCE_DIR}/lib/FMOD/fmod_vc.lib
-${CMAKE_SOURCE_DIR}/lib/FMOD/fmodL_vc.lib
-${CMAKE_SOURCE_DIR}/lib/FreeType/freetype.lib)
+${CMAKE_SOURCE_DIR}/lib/SDL2.lib 
+${CMAKE_SOURCE_DIR}/lib/SDL2main.lib 
+${CMAKE_SOURCE_DIR}/lib/SDL2_image.lib
+${CMAKE_SOURCE_DIR}/lib/fmod_vc.lib
+${CMAKE_SOURCE_DIR}/lib/fmodL_vc.lib
+${CMAKE_SOURCE_DIR}/lib/freetype.lib
+${CMAKE_SOURCE_DIR}/lib/glfw3.lib)
 
 source_group("Header Files/Components/Core" FILES ${CMAKE_SOURCE_DIR}/src/Audio.h)
 source_group("Header Files/Components/Core" FILES ${CMAKE_SOURCE_DIR}/src/Buffer.h)
@@ -199,16 +201,11 @@ source_group("Shaders" FILES ${CMAKE_SOURCE_DIR}/Shaders/Main.vert)
 source_group("Shaders" FILES ${CMAKE_SOURCE_DIR}/Shaders/Text.frag)
 source_group("Shaders" FILES ${CMAKE_SOURCE_DIR}/Shaders/Text.vert)
 
-add_custom_command(TARGET Handmade POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory
-${CMAKE_SOURCE_DIR}/bin/FMOD 
-$<TARGET_FILE_DIR:Handmade>)
+#Copy all .dll files as well as the Assets/Data/Shaders folders 
+#into the Debug/Release folders after building the project in IDE 
 
 add_custom_command(TARGET Handmade POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory
-${CMAKE_SOURCE_DIR}/bin/FreeType 
-$<TARGET_FILE_DIR:Handmade>)
-
-add_custom_command(TARGET Handmade POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory
-${CMAKE_SOURCE_DIR}/bin/SDL 
+${CMAKE_SOURCE_DIR}/bin 
 $<TARGET_FILE_DIR:Handmade>)
 
 add_custom_command(TARGET Handmade POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory
@@ -222,6 +219,10 @@ $<TARGET_FILE_DIR:Handmade>/Data)
 add_custom_command(TARGET Handmade POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory
 ${CMAKE_SOURCE_DIR}/Shaders
 $<TARGET_FILE_DIR:Handmade>/Shaders)
+
+#Copy the Assets/Data/Shaders folders into the CMake target directory after building
+#the project in IDE. This allows the application to run successfully from within the IDE 
+#Note that we don't copy the .dlls since them being in the Debug/Release folders is fine
 
 add_custom_command(TARGET Handmade POST_BUILD COMMAND ${CMAKE_COMMAND} -E copy_directory
 ${CMAKE_SOURCE_DIR}/Assets 
