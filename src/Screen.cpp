@@ -7,12 +7,37 @@
 #include "Screen.h"
 #include "Utility.h"
 
+#include "Input.h"
+
 //======================================================================================================
 Screen* Screen::Instance()
 {
 	static Screen* screenObject = new Screen();
 	return screenObject;
 }
+
+bool Screen::IsXClicked()
+{
+	return isXClicked;
+}
+
+bool Screen::IsWindowResized()
+{
+	return IsWindowResized;
+}
+
+void Screen::CloseWindowCallback(GLFWwindow* window)
+{
+	isXClicked = true;
+}
+
+void Screen::WindowResizeCallback(GLFWwindow* window, int width, int height)
+{
+	resolution.x = width;
+	resolution.y = height;
+	isWindowResized = true;
+}
+
 //======================================================================================================
 bool Screen::Initialize(const std::string& filename)
 {
@@ -123,10 +148,16 @@ bool Screen::Initialize(const std::string& filename)
 	resolution.x = std::stoi(dataMap["Width"]);
 	resolution.y = std::stoi(dataMap["Height"]);
 	
-	SetViewport(0, 0, resolution.x, resolution.y);
+	//SetViewport(0, 0, resolution.x, resolution.y);
 
-	//glfwSetFramebufferSizeCallback(window, Screen::WindowResizeCallback);
 
+	//Assign callback functions inside the Input manager
+	Input::Instance()->AssignCallbacks(window);
+	
+	//Assign our own native callback functions
+	glfwSetWindowCloseCallback(window, Screen::CloseWindowCallback);
+	glfwSetFramebufferSizeCallback(window, Screen::WindowResizeCallback);
+	
 	glEnable(GL_BLEND);
 	glEnable(GL_LINE_SMOOTH);
 	glEnable(GL_SCISSOR_TEST);
@@ -141,13 +172,8 @@ bool Screen::Initialize(const std::string& filename)
 	return true;
 }
 
-//void Screen::WindowResizeCallback(GLFWwindow* window, int width, int height)
-//{
-//	SetViewport(0, 0, resolution.x, resolution.y);
-//}
-
 //======================================================================================================
-const glm::ivec2& Screen::GetResolution()
+const glm::ivec2& Screen::GetResolution() const
 {
 	//SDL_GetWindowSize(window, &resolution.x, &resolution.y);
 	//assert(resolution != glm::ivec2(0));

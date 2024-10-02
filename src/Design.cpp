@@ -194,7 +194,7 @@ State* Design::Update(int deltaTime)
 {
 	Audio::Update();
 
-	if (Input::Instance()->IsXClicked() || isStateComplete)
+	if (Screen::IsXClicked() || isStateComplete)
 	{
 		return nullptr;
 	}
@@ -209,7 +209,8 @@ State* Design::Update(int deltaTime)
 	sceneBox.Update();
 
 	BoxCollider mouseBox;
-	auto mousePosition = Input::Instance()->GetMousePosition();
+	//auto mousePosition = Input::Instance()->GetMousePosition();
+	auto mousePosition = Input::Instance()->GetState().mousePosition;
 	mouseBox.SetPosition(static_cast<GLfloat>(mousePosition.x), static_cast<GLfloat>(mousePosition.y), 0.0f);
 	mouseBox.SetDimension(1.0f, 1.0f, 0.0f);
 	mouseBox.Update();
@@ -220,13 +221,13 @@ State* Design::Update(int deltaTime)
 	{
 		//Zoom
 		auto camPos = sceneCamera->GetTransform().GetPosition();
-		camPos.z -= (Input::Instance()->GetMouseWheel().y);
+		camPos.z -= (Input::Instance()->GetState().mouseWheel.y);
 		sceneCamera->GetTransform().SetPosition(camPos);
 
 		//Rotate grid
-		if (Input::Instance()->IsLeftButtonClicked())
+		if (Input::Instance()->GetState().isLeftButtonClicked)
 		{
-			auto mouseMotion = Input::Instance()->GetMouseMotion();
+			auto mouseMotion = Input::Instance()->GetState().mouseMotion;
 			sceneRotation.x += -mouseMotion.y;
 			sceneRotation.y += mouseMotion.x;
 			grid->GetTransform().SetRotation(sceneRotation);

@@ -35,9 +35,13 @@ public:
 
 	static Screen* Instance();
 
+	static bool IsXClicked();
+
+	static bool IsWindowResized();
+
 	bool Initialize(const std::string& filename);
 
-	const glm::ivec2& GetResolution();
+	const glm::ivec2& GetResolution() const;
 
 	void SetVSync(VSync VSync);
 	void IsDepthTestEnabled(bool flag);
@@ -45,7 +49,6 @@ public:
 	void SetResolution(GLint width, GLint height);
 	void SetViewport(GLint x, GLint y, GLsizei width, GLsizei height);
 
-	//void WindowResizeCallback(GLFWwindow* window, int width, int height);
 
 	void SetColor(const glm::vec4& color);
 	void SetColor(const glm::uvec4& color);
@@ -58,13 +61,19 @@ public:
 	void Present() const;
 	void Shutdown() const;
 
+	static void CloseWindowCallback(GLFWwindow* window);
+	static void WindowResizeCallback(GLFWwindow* window, int width, int height);
+
+
 private:
 
 	Screen() {}
 	Screen(const Screen&);
 	Screen& operator=(Screen&);
 
-	glm::ivec2 resolution{ 0 };
+	inline static bool isXClicked{ false };
+	inline static glm::ivec2 resolution{ 0 };
+	inline static bool isWindowResized{ false };
 	
 	GLFWwindow* window{ nullptr };
 
