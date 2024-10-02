@@ -122,8 +122,9 @@ bool Design::OnEnter()
 
 	//=========================================================================
 
-	ImGui::GetIO().Fonts->AddFontFromFileTTF("Assets/Fonts/Quikhand.ttf", fontSize);
-	ImGui::GetIO().Fonts->Build();
+	//temp ui disable
+	//ImGui::GetIO().Fonts->AddFontFromFileTTF("Assets/Fonts/Quikhand.ttf", fontSize);
+	//ImGui::GetIO().Fonts->Build();
 
 	//WIP======================================================================
 	//Adding objects to the scene
@@ -398,7 +399,8 @@ bool Design::Render()
 	  //ImGUI UI (WIP)
 	  //==============================================================================
 
-	ImGui_ImplOpenGL3_NewFrame();
+	//temp ui disable
+	/*ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL2_NewFrame();
 	ImGui::NewFrame();
 
@@ -408,7 +410,7 @@ bool Design::Render()
 	RenderPropertiesWindow();
 
 	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());*/
 
 	return true;
 }

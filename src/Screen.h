@@ -2,8 +2,10 @@
 #include <map>
 #include <string>
 #include <gl.h>
+#include <glfw3.h>
 #include <glm.hpp>
-#include <SDL.h>
+
+//#include <SDL.h>
 
 //This code usually resides in the stdafx.h file and  
 //sets the manifest so that the modern Windows controls  
@@ -43,6 +45,8 @@ public:
 	void SetResolution(GLint width, GLint height);
 	void SetViewport(GLint x, GLint y, GLsizei width, GLsizei height);
 
+	//void WindowResizeCallback(GLFWwindow* window, int width, int height);
+
 	void SetColor(const glm::vec4& color);
 	void SetColor(const glm::uvec4& color);
 	void SetColor(GLfloat r = 0.0f,
@@ -61,7 +65,10 @@ private:
 	Screen& operator=(Screen&);
 
 	glm::ivec2 resolution{ 0 };
-	SDL_Window* window{ nullptr };
-	SDL_GLContext context{ nullptr };
+	
+	GLFWwindow* window{ nullptr };
+
+	//SDL_Window* window{ nullptr };
+	//SDL_GLContext context{ nullptr };
 
 };
